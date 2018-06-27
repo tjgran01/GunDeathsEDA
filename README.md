@@ -10,7 +10,7 @@ at K2 Data Science bootcamp.
 
 ## Goal:
 
-This project is an exploration of the a gun violence dataset posted to Kaggle.com:
+This project is an exploration of a gun violence dataset posted to Kaggle.com:
 
 https://www.kaggle.com/jameslko/gun-violence-data
 
@@ -69,6 +69,6 @@ The project as it currently stands is interested in exploring two questions:
 
 1. Does public policy (i.e. stricter gun regulation) have reduce the number of deaths we might expect to see in a state given it's population?
 
-2. Does Giffords Scorecard (http://lawcenter.giffords.org/scorecard/) for gun policy state rankings have an empirical effect (i.e. do states with high scorecard rankings actually reduce the amount of gun injuries and deaths [Or is the gun law rank a baloney measure]).
+2. Does Giffords Scorecard (http://lawcenter.giffords.org/scorecard/) for gun policy state rankings have an empirical effect (i.e. do states with high scorecard rankings actually reduce the amount of gun injuries and deaths [Or is their gun law state ranking a baloney measure]).
 
 ## Quickstart.
