@@ -1,0 +1,31 @@
+## Writeup.
+
+### Introduction.
+
+Gun violence in the United States has, throughout the years, become a 'hot button' political issue. Oftentimes, the debate is stalemated when the two parties on opposite sides of the debate realize they they are typically arguing past one another, highlighting specific values while downplaying the other side's. Advocates for stricter gun policy often argue that that the sale and possession of firearms should be more regulated than the laws currently on the books require, and that if more strict regulations are put in place then the amount of gun related deaths and injuries will decrease. The opposition contests that limiting the sale, or increasing regulation on firearms, will unjustly infringe upon law-abiding gun owner's second amendment rights. These two arguments both have a valid place in the marketplace of ideas, the gun-control advocate arguing from a place of valuing human life over personal liberty, the second amendment rights advocate arguing that personal liberty comes at a cost, and that the cost in the case of the right to bear arms, is sometimes paid in the lives of people.
+
+The above debate is not the stalemated arguments this project aims to look into. It is impossible for data to tell us what to value. The naturalistic fallacy written of in G.E. Moore's _Principia Ethica_ still ring as true today as they did over a century ago. To paraphrase: We cannot infer _an ought_ from _an is_. That is to say that just because the nature of the world has a certain set of affairs, it does not mean that that set of affairs is the morally correct. Exploring data will not inform us as to whether or the sacrifice of one life for two is a valid moral claim, nor will it tell us if an individual's right to x, outweighs another individual's right to y. That's above data's capabilities, and, frankly, above my pay grade.
+
+What this project aims to do instead is to look at a weaker version of the over-aching arguments posited above, something data can give insights into. The weaker, and less philosophical, debate is an empirical one: What evidence is there that gun control policy actually does what it purports to do? i.e. Do stricter gun regulations _actually_ result in less gun related deaths, and if so, to what degree? This project will look into gun related deaths in the United States over the last five years (Jan 2013 - March 2018), and try to quantify and visualize the relationship between stricter gun policy and the amount of gun deaths.
+
+### Methods
+
+#### Gathering the Data.
+
+I was first inspired to begin work on this project on by downloading and looking into a very thorough dataset posted to Kaggle.com. The dataset was posted by Kaggle user James Ko. According to the user's documentation, this data was compiled from the nonprofit organization Gun Violence Archive (gunviolencearchive.org) through various web scraping and data organization techniques. The data was downloaded in `.csv` format, and moved into this repository under the name `./data/raw/gun_v.csv`.
+
+Though the Kaggle user did an excellent job of categorizing and organizing the `.csv` dataset posted, there were still a few other  variables that needed to be included in order to perform the regression analysis needed to complete this project. In order to perform a proper regression analysis, I decided that it was best to break the information down by state, as individual states oftentimes have gun laws that go above and beyond the federal requirements for purchasing a firearm. Since states vary greatly in population (max=39506094(CA), min=584447(WY), mean=6379576), population information about each state was downloaded from the Census Bureau (https://www.census.gov/), based on the 2010 census of the United States. That information was moved into this repository and stored in `./data/raw/state_pop.csv`. Though this measure may not be a perfect representation of state populations in 2018 the census counts were decided upon so as to avoid having to arbitrarily pick a population estimate value for each state between the years of 2013 - 2018, though these estimates are readily avilable and could be used instead of the census counts. Population was obtained to control for the amount of gun deaths in each state.
+
+Finally, I needed some information about gun policy on the books in each state in the US. To obtain this information I visited the webpage for the Gifford's Law Center to Prevent Gun Violence, a public interest law center who promotes gun control measures as a way to counteract gun violence. The Gifford's page contained their 'ranking' of gun policy by state, with a grade of A+ being the best and a grade of F being the worst. They also ranked state's gun laws in order, with California being ranked highest, and Mississippi being ranked the lowest. It is important to consider that this group does advocate for stronger gun policy, and that their rankings reflect laws that that would like executed in all states. A high ranking from the Gifford's Law Center may therefore be viewed as a proxy for the strong regulations that gun control activists propose. This information, as well as information as to whether or not background checks were required for the purchase of a firearm in each state, was scraped from the site and compiled into a `.csv` file located at `./data/raw/gun_law_rank.csv`.
+
+### Cleaning and Exploring the Data.
+
+Once all the data were gathered into the project, preliminary exploration of the initial dataset gathered began. In the `./GunDeathsEDA/gunviolence.py` file, a class, `GunViolenceTool()`, was created, so that a `GunViolenceTool()` could be imported into a python shell and used for testing. Basic stats, and general information about the dataset were coded as attributes to the class, so that a user could easily import the tool and get meaningful information quickly. For instance, the user could find the deadliest incident in the dataset using just the following lines of code:
+
+`>>>from gunviolence import GunViolenceTool`
+
+`>>>gvt = GunViolenceTool()``
+
+`>>>gvt.deadliest`
+
+This code would return the incident in the dataset with the highest number of fatalities. For other attributes and basic states refer to the documentation for the `gunviolence.py` located at `./GunDeathsEDA/docs/README.md`.

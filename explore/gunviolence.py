@@ -55,10 +55,13 @@ class GunViolenceTool(object):
 
     def make_population_dataset(self, out_path):
         fpath = "../data/cleaned/tmp.csv"
+
         # make deaths df // Gotta be a cleaner way to do this.
+        # reset_index() method
         df = pd.DataFrame(self.st_total_killed, columns=["n_killed"], index=None)
         df.to_csv(fpath)
         df = pd.read_csv(fpath)
+
         os.remove(fpath)
         # merge state abbv to df
         df = pd.merge(df, self.st_abv[["abbv", "state"]], on="state")
@@ -75,6 +78,7 @@ class GunViolenceTool(object):
         return df
 
 # Modeling Methods -------------------------------------------------------------
+# sklearn
 
     def death_pop_reg(self):
 
@@ -225,6 +229,7 @@ class GunViolenceTool(object):
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
         out_plt = self.set_plot_titles(plt, df)
+        out_plt.savefig('../figs/bgc_reg.png', format="png")
         out_plt.show()
 
 
@@ -247,6 +252,7 @@ class GunViolenceTool(object):
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
         out_plt = self.set_plot_titles(plt, df)
+        out_plt.savefig('../figs/strank_reg.png', format="png")
         out_plt.show()
 
 

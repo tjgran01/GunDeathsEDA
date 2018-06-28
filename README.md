@@ -14,7 +14,7 @@ This project is an exploration of a gun violence dataset posted to Kaggle.com:
 
 https://www.kaggle.com/jameslko/gun-violence-data
 
-The main exploration in this project will involve looking at state by state comparisons between state populations as well as state percentage of population located in urban areas to see how these variables affect the number of gun deaths and injuries that that particular state has had in recent years (2013-2018).
+The main exploration in this project will involve looking at the relationship between state population and the number of gun deaths and injuries that that particular state has had in recent years (2013-2018).
 
 Once the initial exploration has been conducted, we will look for noteworthy outliers (i.e. states that per their population should have a significantly lower or higher rate of gun releated deaths or gun related injuries) and *attempt* to explore what may be the extraneous factors that are either driving the rate of gun violence up or down in that particular state.
 
@@ -41,7 +41,7 @@ You may use the `format()` function instead. (But in all honesty, get with the t
 `2. print("Here is a {0} string.".format(x))`
 
 __Note__: This project has been tested only on MacOSX Sierra (don't get with the times when it comes to
-to High Sierra), but it should work in most MacOS and Linux environments, and probably Windows as well. I don't believe I am doing anything that won't be platform independent.
+to High Sierra), but it should work in most MacOS and Linux environments, and probably Windows as well. I don't believe I am doing anything that wouldn't be platform independent.
 
 ### Installing Requirements.
 
@@ -51,7 +51,7 @@ from the command line (In the main project directory):
 
 1. Create the virtual environment.
 
-  `python36 -m venv venv`
+  `python3.6 -m venv venv`
 
 2. Activate the virtual environment.
 
@@ -71,4 +71,27 @@ The project as it currently stands is interested in exploring two questions:
 
 2. Does Giffords Scorecard (http://lawcenter.giffords.org/scorecard/) for gun policy state rankings have an empirical effect (i.e. do states with high scorecard rankings actually reduce the amount of gun injuries and deaths [Or is their gun law state ranking a baloney measure]).
 
-## Quickstart.
+## (No so Quick)start.
+
+1. Download the original Kaggle dataset.
+
+Again: https://www.kaggle.com/jameslko/gun-violence-data
+
+2. Move that bad boy into `/data/raw`.
+
+3. Name that bad boy `gun_v.csv`
+
+4. Install your virtual environment. (See above section on installing requirements if you are unsure how to do this.)
+
+5. Install requirements once you've activated the virtual environment.
+
+  `pip install -r requirement.txt`
+
+6. Navigate to `./explore`
+
+7. Open up your python shell and import the gunviolence tool, and create a `GunViolenceTool()` instance.
+
+  `from gunviolence import GunViolenceTool`
+  `gvt = GunViolenceTool()`
+
+8. Refer to my bad documentation forever.
