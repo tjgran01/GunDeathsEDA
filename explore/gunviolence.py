@@ -99,7 +99,7 @@ class GunViolenceTool(object):
             ax: The ax, with the text values plotted next to their scatter
             point."""
         for x, y, state in zip(df["st_pop"], df["n_killed"], df["abbv"]):
-            sts_of_interest = ["NY", "CA", "TX", "FL"]
+            sts_of_interest = ["NY", "CA", "TX", "FL", "IL", "PA", "OH"]
             if state in sts_of_interest:
                 ax.text(x - 10000, y + 100, state, color=self.pallet["black"],
                         fontsize="8")
