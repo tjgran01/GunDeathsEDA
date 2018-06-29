@@ -3,7 +3,16 @@
 This project was created the satisfy the requirements for the EDA / Regression project
 at K2 Data Science bootcamp.
 
-This is the long, drawn out, version of the write up in which I explain where all of the data came from, and give the project some context. To view a more concise version of this writeup, check out `./SUMMARY.md` in this directory.
+This is the long, drawn out, version of the write up in which I explain where all of the data came from and give the project some context. To view a more concise version of this writeup, check out `./SUMMARY.md` in this directory.
+
+### Table of Contents
+1. [Introduction](#introduction)
+2. [Methods](#methods)
+  - [Gathering The Data](#gathering-the-data)
+  - [Cleaning and Exploring the Data](#cleaning-and-exploring-the-data)
+  - [Generating Regression Plots](#generating-regression-plots)
+3. [Results](#results)
+4. [Discussion](#Discussion)
 
 ### Introduction.
 
@@ -46,3 +55,7 @@ To generate the regression plots the `regplot()` method from the `seaborn` packa
 The regression plots with custom `matplotlib` styling code in this project are created by calling the `GunViolenceTool().gun_d_regplot_state_rank()` and `GunViolenceTool().gun_d_regplot_bcg()` methods to plot the information about state gun law ranks and whether or not a state required background checks respectively.
 
 ## Results
+
+![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/img/strank_reg.png)
+
+![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/img/bgc_reg.png)
