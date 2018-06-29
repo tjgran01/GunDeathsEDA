@@ -1,5 +1,10 @@
 ## Writeup.
 
+This project was created the satisfy the requirements for the EDA / Regression project
+at K2 Data Science bootcamp.
+
+This is the long, drawn out, version of the write up in which I explain where all of the data came from, and give the project some context. To view a more concise version of this writeup, check out `./SUMMARY.md` in this directory.
+
 ### Introduction.
 
 Gun violence in the United States has, throughout the years, become a 'hot button' political issue. Oftentimes, the debate is stalemated when the two parties on opposite sides of the debate realize they they are typically arguing past one another, highlighting specific values while downplaying the other side's. Advocates for stricter gun policy often argue that that the sale and possession of firearms should be more regulated than the laws currently on the books require, and that if more strict regulations are put in place then the amount of gun related deaths and injuries will decrease. The opposition contests that limiting the sale, or increasing regulation on firearms, will unjustly infringe upon law-abiding gun owner's second amendment rights. These two arguments both have a valid place in the marketplace of ideas, the gun-control advocate arguing from a place of valuing human life over personal liberty, the second amendment rights advocate arguing that personal liberty comes at a cost, and that the cost in the case of the right to bear arms, is sometimes paid in the lives of people.
@@ -29,3 +34,15 @@ Once all the data were gathered into the project, preliminary exploration of the
 `>>>gvt.deadliest`
 
 This code would return the incident in the dataset with the highest number of fatalities. For other attributes and basic states refer to the documentation for the `gunviolence.py` located at `./GunDeathsEDA/docs/README.md`.
+
+After the ability to generate basic stats about the dataset and information about incidents was generated. A cleaned dataset was created which combined the information about gun deaths per state `n_killed`, state population `st_pop`, Giffords law center letter grade `st_letter_rank`, state law strength rank, `st_law_rank`, and whether or not a state had background checks `bg_check`. These pieces of information were generated through the `GunViolenceTool()` method `make_population_dataset()`, and stored at `./data/cleaned/gun_d_with_pop.csv` in this repository.
+
+### Generating Regression Plots.
+
+All of the the regression plots for this project were generated from the cleaned dataset created based on state populations and gun death rates. Although there was information about country and voting districts in the original dataset, which are interesting data and could be used in a more detailed analysis of gun violence in the US, this project decided to look at state by state information due to the fact that gun laws vary primarily by state, and not county. There are exceptions to this, such as New York City, which has stricter gun requirements than the rest of the state (https://www.nraila.org/gun-laws/state-gun-laws/new-york/), but these exceptions are not the general rule.
+
+To generate the regression plots the `regplot()` method from the `seaborn` package was used. The plots were then styled and made clearer by custom `matplotlib` code, that would color states differently depending on the severity of the laws, or whether or not the states had background checks. Styling involved overriding default colors with a custom color pallet, generating a custom legend, and in some cases labeling particular states in the dataset, so that someone looking at the chart would be able to see where some interesting data points might existed in the `regplot()`.
+
+The regression plots with custom `matplotlib` styling code in this project are created by calling the `GunViolenceTool().gun_d_regplot_state_rank()` and `GunViolenceTool().gun_d_regplot_bcg()` methods to plot the information about state gun law ranks and whether or not a state required background checks respectively.
+
+## Results
