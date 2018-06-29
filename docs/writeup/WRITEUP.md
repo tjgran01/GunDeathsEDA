@@ -56,6 +56,13 @@ The regression plots with custom `matplotlib` styling code in this project are c
 
 ## Results
 
-![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/strank_reg.png "Figure 1-1")
+| ![space-1.jpg](http://www.storywarren.com/wp-content/uploads/2016/09/space-1.jpg) |
+|:--:|
+| *Space* |
+
+|
+![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/strank_reg.png) |
+|:--:|
+| _State Rank Regression_ |
 
 ![Figure1-2](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/bgc_reg.png "Figure 1-2")
