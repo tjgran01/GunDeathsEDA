@@ -56,6 +56,6 @@ The regression plots with custom `matplotlib` styling code in this project are c
 
 ## Results
 
-![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/tree/master/figs/img/strank_reg.png)
+![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/tree/master/figs/strank_reg.png)
 
-![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/tree/master/figs/img/bgc_reg.png)
+![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/tree/master/figs/bgc_reg.png)
