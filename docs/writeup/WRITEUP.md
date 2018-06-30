@@ -56,13 +56,18 @@ The regression plots with custom `matplotlib` styling code in this project are c
 
 ## Results
 
-| ![space-1.jpg](http://www.storywarren.com/wp-content/uploads/2016/09/space-1.jpg) |
-|:--:|
-| *Space* |
 
-|
-![Figure1-1](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/strank_reg.png) |
-|:--:|
-| _State Rank Regression_ |
 
-![Figure1-2](https://github.com/tjgran01/GunDeathsEDA/blob/master/figs/bgc_reg.png "Figure 1-2")
+|![Figure1-2](/figs/bgc_reg.png) |
+|:--:|
+| _Back Ground Checks Regression Plot_ |
+
+###### Above: A scatterplot with a regression line drawn expressing the relationship between state population and the amount of gun deaths in that state. Red points indicate states without background checks for firearm purchases. Green points indicate states states that require background checks for firearm purposes.
+
+
+
+|![Figure1-1](/figs/strank_reg.png) |
+|:--:|
+| _State Rank Regression Plot_ |
+
+###### Above: A scatterplot with a regression line drawn expressing the relationship between state population and the amount of gun deaths in that state. Colors from cool (blue) to warm (red) indicate the Gifford's law center ranking, with blue being the highest to red being the lowest.
