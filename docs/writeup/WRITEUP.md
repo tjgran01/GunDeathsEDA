@@ -50,24 +50,27 @@ After the ability to generate basic stats about the dataset and information abou
 
 All of the the regression plots for this project were generated from the cleaned dataset created based on state populations and gun death rates. Although there was information about country and voting districts in the original dataset, which are interesting data and could be used in a more detailed analysis of gun violence in the US, this project decided to look at state by state information due to the fact that gun laws vary primarily by state, and not county. There are exceptions to this, such as New York City, which has stricter gun requirements than the rest of the state (https://www.nraila.org/gun-laws/state-gun-laws/new-york/), but these exceptions are not the general rule.
 
-To generate the regression plots the `regplot()` method from the `seaborn` package was used. The plots were then styled and made clearer by custom `matplotlib` code, that would color states differently depending on the severity of the laws, or whether or not the states had background checks. Styling involved overriding default colors with a custom color pallet, generating a custom legend, and in some cases labeling particular states in the dataset, so that someone looking at the chart would be able to see where some interesting data points might existed in the `regplot()`.
+To generate the regression plots the `regplot()` method from the `seaborn` package was used. The plots were then styled and made clearer by custom `matplotlib` code, that would color states differently depending on the severity of the laws, or whether or not the states had background checks. Styling involved overriding default colors with a custom color palette, generating a custom legend, and in some cases labeling particular states in the dataset, so that someone looking at the chart would be able to see where some interesting data points might existed in the `regplot()`.
 
 The regression plots with custom `matplotlib` styling code in this project are created by calling the `GunViolenceTool().gun_d_regplot_state_rank()` and `GunViolenceTool().gun_d_regplot_bcg()` methods to plot the information about state gun law ranks and whether or not a state required background checks respectively.
 
 ## Results
 
+The first analysis run was to determine whether or not a single policy could be enacted in order to diminish the number of gun deaths in a particular state. In order to accomplish this an Ordinary Least Squares (OLS) linear regression model was created, using state population as the predictor variable. The regression determined that a population increase of x resulted in a increase of y gun deaths per each state. Though it could be argued that this is an imperfect collection of variables, and that variables such as population density within a state, or percentage of urban population within a state could be more predictive of the amount of gun deaths a state has had within the last five years these metrics were not gathered for the analysis, relying instead on the assumption that these factors would be normally distributed throughout the states, and would therefore not strongly effect the analysis.
 
-
-|![Figure1-2](/figs/bgc_reg.png) |
+|![Figure1-1](/figs/bgc_reg.png) |
 |:--:|
 | _Back Ground Checks Regression Plot_ |
+|_Above: A scatterplot with a regression line drawn, expressing the relationship between state population and the amount of gun deaths in that state. Red points indicate states without background checks for firearm purchases. Green points indicate states states that require background checks for firearm purposes._|
 
-###### Above: A scatterplot with a regression line drawn expressing the relationship between state population and the amount of gun deaths in that state. Red points indicate states without background checks for firearm purchases. Green points indicate states states that require background checks for firearm purposes.
+After the regression analysis was run, the data was split into two groups: states that required background checks in order to purchase a firearm, and states that did not. States that did not require background checks were assigned as the control group, and states that did were assigned as the treatment group. An independent t-test was run on the two groups, the null Hypothesis being that background checks being required for the purchase of a firearm in a state had no effect on the amount of gun deaths in that state. The t-test results indicated a t-statistic of 2.1418, with a p-value of < .05, indicating a statistically significant difference. The null hypothesis was therefore rejected, and we can say that background check requirements in a particular state do have an effect on the amount of gun deaths that happened within that state.
 
+|![Figure1-2](/figs/bgc_box.png) |
+|:--:|
+| _Back Ground Checks Regression Plot_ |
+|_Above: A box plot, showing the differences in means, variances, maximums and minimums in the amount of gun deaths per capita in states that require background checks for the purchase of firearms and those that do not._|
 
-
-|![Figure1-1](/figs/strank_reg.png) |
+| ![Figure1-3](/figs/strank_reg.png) |
 |:--:|
 | _State Rank Regression Plot_ |
-
-###### Above: A scatterplot with a regression line drawn expressing the relationship between state population and the amount of gun deaths in that state. Colors from cool (blue) to warm (red) indicate the Gifford's law center ranking, with blue being the highest to red being the lowest.
+|_Above: A scatterplot with a regression line drawn, expressing the relationship between state population and the amount of gun deaths in that state. Colors from cool (blue) to warm (red) indicate the Gifford's law center ranking, with blue being the highest to red being the lowest._|

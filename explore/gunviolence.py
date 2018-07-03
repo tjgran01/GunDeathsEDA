@@ -4,8 +4,9 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+from scipy import stats
 import statsmodels.api as sm
-import pallet_dicts
+import palette_dicts
 
 class GunViolenceTool(object):
     def __init__(self, gv="../data/raw/gun_v.csv",
@@ -13,7 +14,8 @@ class GunViolenceTool(object):
                  st_abv="../data/raw/st_abv.csv",
                  gun_law_rank="../data/raw/gun_law_rank.csv"):
 
-        self.pallet = pallet_dicts.soft_colors
+        self.palette = palette_dicts.soft_colors
+        self.box_pal = palette_dicts.box_plot_colors
 
         # Loading in files
         self.cleaned_file = "../data/cleaned/gun_d_with_pop.csv"
@@ -77,6 +79,19 @@ class GunViolenceTool(object):
         df.to_csv(out_path, index=False)
         return df
 
+# Stats Methods ----------------------------------------------------------------
+
+    def bgc_t_test(self, df):
+        df["d_per_capita"] = df["n_killed"] / df["st_pop"]
+        df_bgc = df.loc[df["bg_check"] == 1]
+        df_no_bgc = df.loc[df["bg_check"] == 0]
+
+        t_stat, p_val = stats.ttest_ind(df_no_bgc["d_per_capita"],
+                                        df_bgc["d_per_capita"])
+        print(f"T-Stat: {t_stat}")
+        print(f"P Value: {p_val}")
+        return(df)
+
 # Modeling Methods -------------------------------------------------------------
 # sklearn
 
@@ -101,7 +116,7 @@ class GunViolenceTool(object):
         for x, y, state in zip(df["st_pop"], df["n_killed"], df["abbv"]):
             sts_of_interest = ["NY", "CA", "TX", "FL", "IL", "PA", "OH"]
             if state in sts_of_interest:
-                ax.text(x - 10000, y + 100, state, color=self.pallet["black"],
+                ax.text(x - 10000, y + 100, state, color=self.palette["black"],
                         fontsize="8")
         return ax
 
@@ -116,15 +131,15 @@ class GunViolenceTool(object):
             tuple: The color(hex), edgecolor(hex), rank_group(str) for each
             state."""
         if val > 39:
-            return (self.pallet["red"], self.pallet["red"], "Ranked 41-50")
+            return (self.palette["red"], self.palette["red"], "Ranked 41-50")
         elif val > 29:
-            return (self.pallet["orange"], self.pallet["orange"], "Ranked 11-20")
+            return (self.palette["orange"], self.palette["orange"], "Ranked 11-20")
         elif val > 19:
-            return (self.pallet["yellow"], self.pallet["yellow"], "Ranked 21-30")
+            return (self.palette["yellow"], self.palette["yellow"], "Ranked 21-30")
         elif val > 9:
-            return (self.pallet["green"], self.pallet["green"], "Ranked 31-40")
+            return (self.palette["green"], self.palette["green"], "Ranked 31-40")
         else:
-            return (self.pallet["blue"], self.pallet["blue"], "Ranked 1-10")
+            return (self.palette["blue"], self.palette["blue"], "Ranked 1-10")
 
 
     def make_color_rank_set(self, df):
@@ -167,10 +182,10 @@ class GunViolenceTool(object):
             df(DataFrame): df with new cols for colors, edgecolors, and
             rank_group."""
 
-        df["colors"] = np.where(df["bg_check"] == 1, self.pallet["green"],
-                                self.pallet["red"])
-        df["edgecolors"] = np.where(df["bg_check"] == 1, self.pallet["green"],
-                                    self.pallet["red"])
+        df["colors"] = np.where(df["bg_check"] == 1, self.palette["green"],
+                                self.palette["red"])
+        df["edgecolors"] = np.where(df["bg_check"] == 1, self.palette["green"],
+                                    self.palette["red"])
         df["rank_group"] = np.where(df["bg_check"] == 1, "Yes", "No")
         return df
 
@@ -201,7 +216,7 @@ class GunViolenceTool(object):
         sns.despine()
         plt.xlim([0, df["st_pop"].max() + 1000000])
         plt.ylim([0, 6000])
-        plt.grid(color=self.pallet["white"], zorder=0)
+        plt.grid(color=self.palette["white"], zorder=0)
         plt.title("Gun Deaths vs. State Population.")
         plt.xlabel("State Population (In Millions)")
         plt.ylabel("Gun Deaths")
@@ -222,9 +237,9 @@ class GunViolenceTool(object):
                          scatter_kws={'facecolors': df['colors'],
                                       'edgecolors': df['edgecolors'],
                                       's': 20},
-                         line_kws={'color': self.pallet["d_grey"]})
+                         line_kws={'color': self.palette["d_grey"]})
         ax = self.add_text_to_points(ax, df)
-        ax.set_facecolor(self.pallet["back_grey"])
+        ax.set_facecolor(self.palette["back_grey"])
 
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
@@ -245,9 +260,9 @@ class GunViolenceTool(object):
                          scatter_kws={'facecolors': df['colors'],
                                       'edgecolors': df['edgecolors'],
                                       's': 35},
-                         line_kws={'color': self.pallet["d_grey"]})
+                         line_kws={'color': self.palette["d_grey"]})
         ax = self.add_text_to_points(ax, df)
-        ax.set_facecolor(self.pallet["back_grey"])
+        ax.set_facecolor(self.palette["back_grey"])
 
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
@@ -256,8 +271,16 @@ class GunViolenceTool(object):
         out_plt.show()
 
 
-    def gun_d_lmplot_bgc(self, df):
+    def bgc_box_plot(self, df):
         df = self.set_bgc_colors(df)
-
-        ax = sns.lmplot(x="st_pop", y="n_killed", hue="bg_check", data=df)
+        df = self.bgc_t_test(df)
+        df["bgc_text"] = np.where(df["bg_check"] == 1, "Yes", "No")
+        ax = sns.boxplot(df["bgc_text"], df["d_per_capita"], data=df,
+                         palette=self.box_pal)
+        ax.set_facecolor(self.palette["back_grey"])
+        sns.despine()
+        plt.title("Gun Deaths Per Capita - Background Checks")
+        plt.xlabel("Back Ground Checks Required")
+        plt.ylabel("Deaths Per Capita")
+        plt.savefig('../figs/bgc_box.png', format="png", dpi=600)
         plt.show()

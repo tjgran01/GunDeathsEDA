@@ -16,3 +16,8 @@ soft_colors = {"black": "#1a1c2c",
                "d_grey": "#324056",
                "back_grey": "#b3ced6"
                }
+
+box_plot_colors = [
+                   "#38b86e",
+                   "#b14156",
+                  ]
