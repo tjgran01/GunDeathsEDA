@@ -1,4 +1,4 @@
 from gunviolence import GunViolenceTool
 
 gvt = GunViolenceTool()
-print(gvt.bgc_box_plot(gvt.deaths_w_pop))
+print(gvt.state_rank_anova(gvt.deaths_w_pop))

@@ -16,6 +16,7 @@ class GunViolenceTool(object):
 
         self.palette = palette_dicts.soft_colors
         self.box_pal = palette_dicts.box_plot_colors
+        self.box_pal_5 = palette_dicts.box_plot_colors_5
 
         # Loading in files
         self.cleaned_file = "../data/cleaned/gun_d_with_pop.csv"
@@ -53,7 +54,7 @@ class GunViolenceTool(object):
         else:
             self.deaths_w_pop = pd.read_csv(self.cleaned_file)
 
-# Data Cleaning Methods --------
+# Data Cleaning Methods --------------------------------------------------------
 
     def make_population_dataset(self, out_path):
         fpath = "../data/cleaned/tmp.csv"
@@ -83,6 +84,7 @@ class GunViolenceTool(object):
 
     def bgc_t_test(self, df):
         df["d_per_capita"] = df["n_killed"] / df["st_pop"]
+        df["Gun Deaths Per 10000 Residents"] = df["d_per_capita"] * 10000
         df_bgc = df.loc[df["bg_check"] == 1]
         df_no_bgc = df.loc[df["bg_check"] == 0]
 
@@ -92,8 +94,20 @@ class GunViolenceTool(object):
         print(f"P Value: {p_val}")
         return(df)
 
+
+    def state_rank_anova(self, df):
+        df["d_per_capita"] = df["n_killed"] / df["st_pop"]
+        df["Gun Deaths Per 10000 Residents"] = df["d_per_capita"] * 10000
+        df = self.set_state_rank_colors(df)
+        groups = df.groupby("rank_group")
+        rank_groups = [data[1]["d_per_capita"] for data in groups]
+        print(rank_groups)
+        F, p = stats.f_oneway(rank_groups[0], rank_groups[1], rank_groups[2],
+                              rank_groups[3], rank_groups[4])
+        print(f"F Stat: {F}")
+        print(f"p value: {p}")
+
 # Modeling Methods -------------------------------------------------------------
-# sklearn
 
     def death_pop_reg(self):
 
@@ -101,7 +115,10 @@ class GunViolenceTool(object):
                        self.deaths_w_pop["st_pop"]).fit()
 
         predictions = model.predict(self.deaths_w_pop["st_pop"])
+        print(predictions)
+        print(predictions.params)
         return model.summary()
+
 
 # Plotting Helper Methods ------------------------------------------------------
 
@@ -275,12 +292,26 @@ class GunViolenceTool(object):
         df = self.set_bgc_colors(df)
         df = self.bgc_t_test(df)
         df["bgc_text"] = np.where(df["bg_check"] == 1, "Yes", "No")
-        ax = sns.boxplot(df["bgc_text"], df["d_per_capita"], data=df,
-                         palette=self.box_pal)
+        ax = sns.boxplot(df["bgc_text"], df["Gun Deaths Per 10000 Residents"],
+                         data=df, palette=self.box_pal)
         ax.set_facecolor(self.palette["back_grey"])
         sns.despine()
         plt.title("Gun Deaths Per Capita - Background Checks")
-        plt.xlabel("Back Ground Checks Required")
-        plt.ylabel("Deaths Per Capita")
+        plt.xlabel("Background Checks Required")
+        plt.ylabel("Gun Deaths Per 10,000 Residents")
         plt.savefig('../figs/bgc_box.png', format="png", dpi=600)
+        plt.show()
+
+
+    def state_rank_box_plot(self, df):
+        df = self.set_state_rank_colors(df)
+        df = self.bgc_t_test(df)
+        ax = sns.boxplot(df["rank_group"], df["Gun Deaths Per 10000 Residents"],
+                         data=df, palette=self.box_pal_5)
+        ax.set_facecolor(self.palette["back_grey"])
+        sns.despine()
+        plt.title("Gun Deaths Per Capita - State Rank")
+        plt.xlabel("State Gun Law Rank")
+        plt.ylabel("Gun Deaths Per 10,000 Residents")
+        plt.savefig('../figs/st_rank_box.png', format="png", dpi=600)
         plt.show()

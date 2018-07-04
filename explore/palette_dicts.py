@@ -21,3 +21,11 @@ box_plot_colors = [
                    "#38b86e",
                    "#b14156",
                   ]
+
+box_plot_colors_5 = [
+                     "#405bd0",
+                     "#38b86e",
+                     "#ffd079",
+                     "#ee7b58",
+                     "#b14156"
+                    ]
