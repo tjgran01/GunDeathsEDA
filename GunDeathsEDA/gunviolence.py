@@ -9,6 +9,14 @@ import statsmodels.api as sm
 import palette_dicts
 
 class GunViolenceTool(object):
+    """A class used to explore the gun violence data set.
+        Args:
+            gv(str): Filepath to gun violence dataset.
+            st_pop(str): Filepath to state population dataset.
+            st_abv(str): Filepath to state abbreviations dataset.
+            gun_law_rank(str): Filepath to state gun law dataset.
+        Return:
+            None"""
     def __init__(self, gv="../data/raw/gun_v.csv",
                  st_pop="../data/raw/state_pop.csv",
                  st_abv="../data/raw/st_abv.csv",
@@ -57,6 +65,15 @@ class GunViolenceTool(object):
 # Data Cleaning Methods --------------------------------------------------------
 
     def make_population_dataset(self, out_path):
+        """Creates a dataset that tallys to the amount of gun deaths per state,
+        and combines that information with state population and current gun law
+        infomration.
+        Args:
+            out_path(str): File path where the dataset will be stored.
+        Returns:
+            df(DataFrame): A pandas DataFrame that combines gun deaths and state
+            information."""
+
         fpath = "../data/cleaned/tmp.csv"
 
         # make deaths df // Gotta be a cleaner way to do this.
@@ -83,6 +100,14 @@ class GunViolenceTool(object):
 # Stats Methods ----------------------------------------------------------------
 
     def bgc_t_test(self, df):
+        """Performs a t_test on states that have a background check and states
+        that do not.
+        Args:
+            df(DataFrame): The cleaned state gun deaths DataFrame.
+        Returns:
+            df(DataFrame): The cleaned state gun deaths DataFrame. With
+            'd_per_capita' col included."""
+
         df["d_per_capita"] = df["n_killed"] / df["st_pop"]
         df["Gun Deaths Per 10000 Residents"] = df["d_per_capita"] * 10000
         df_bgc = df.loc[df["bg_check"] == 1]
@@ -96,6 +121,14 @@ class GunViolenceTool(object):
 
 
     def state_rank_anova(self, df):
+        """Performs an ANOVA test on states that have different gun law
+        rankings.
+        Args:
+            df(DataFrame): The cleaned state gun deaths DataFrame.
+        Returns:
+            df(DataFrame): The cleaned state gun deaths DataFrame. With
+            'd_per_capita' col included."""
+
         df["d_per_capita"] = df["n_killed"] / df["st_pop"]
         df["Gun Deaths Per 10000 Residents"] = df["d_per_capita"] * 10000
         df = self.set_state_rank_colors(df)
@@ -110,6 +143,13 @@ class GunViolenceTool(object):
 # Modeling Methods -------------------------------------------------------------
 
     def death_pop_reg(self):
+        """Creates a liner regression model with number of people killed by guns
+        in a state being predicted by it's state population.
+        Args:
+            None
+        Returns:
+            model.summary(DataFrame): A DataFrame that provides information about
+            the regression model."""
 
         model = sm.OLS(self.deaths_w_pop["n_killed"],
                        self.deaths_w_pop["st_pop"]).fit()
@@ -289,6 +329,13 @@ class GunViolenceTool(object):
 
 
     def bgc_box_plot(self, df):
+        """Generates a boxplot comparing gun deaths per capita between states
+        that require a background check and states that do not.
+        Args:
+            df(DataFrame):  The cleaned state gun deaths DataFrame.
+        Returns:
+            None (shows and saves the plot.)"""
+
         df = self.set_bgc_colors(df)
         df = self.bgc_t_test(df)
         df["bgc_text"] = np.where(df["bg_check"] == 1, "Yes", "No")
@@ -304,6 +351,12 @@ class GunViolenceTool(object):
 
 
     def state_rank_box_plot(self, df):
+        """Generates a boxplot comparing gun deaths per capita between states
+        that have different Gifford's Law Center gun law rankings.
+        Args:
+            df(DataFrame):  The cleaned state gun deaths DataFrame.
+        Returns:
+            None (shows and saves the plot.)"""
         df = self.set_state_rank_colors(df)
         df = self.bgc_t_test(df)
         ax = sns.boxplot(df["rank_group"], df["Gun Deaths Per 10000 Residents"],

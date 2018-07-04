@@ -4,6 +4,10 @@
 This project was created the satisfy the requirements for the EDA / Regression project
 at K2 Data Science bootcamp.
 
+**The Writeup for this project is located at:**
+
+`/docs/writeup/README.md`
+
 ##### Important: The original dataset that I am working off of for this exploration is not included in this repo (it's too big to store on GitHub without me shelling out money! [Which is chilling, actually]). The original file can (and should) be downloaded from the kaggle link in the Goal section.
 
 ##### If you wish to play around with some of the scripts and stuff in this repo place that .csv file into `.\data\raw\` and name in `gun_v.csv`
@@ -17,10 +21,6 @@ https://www.kaggle.com/jameslko/gun-violence-data
 The main exploration in this project will involve looking at the relationship between state population and the number of gun deaths and injuries that that particular state has had in recent years (2013-2018).
 
 Once the initial exploration has been conducted, we will look for noteworthy outliers (i.e. states that per their population should have a significantly lower or higher rate of gun releated deaths or gun related injuries) and *attempt* to explore what may be the extraneous factors that are either driving the rate of gun violence up or down in that particular state.
-
-**The Writeup for this project is located at:**
-
-`/docs/writeup/README.md`
 
 ## Requirements:
 

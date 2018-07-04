@@ -69,7 +69,7 @@ After the regression analysis was run, the data was split into two groups: state
 
 |![Figure1-2](/figs/bgc_box.png) |
 |:--:|
-| _Back Ground Checks Regression Plot_ |
+| _Back Ground Checks Box Plot_ |
 |_Above: A box plot, showing the differences in means, variances, maximums and minimums in the amount of gun deaths per capita in states that require background checks for the purchase of firearms and those that do not. **It is worth pointing out that the y axis is not counting yearly deaths. These numbers were recorded over a period of five years.**_|
 
 ### State Law Ranking
@@ -85,7 +85,7 @@ After the regression analysis was run, the data was split into their five groups
 
 | ![Figure1-3](/figs/st_rank_box.png) |
 |:--:|
-| _State Rank Regression Plot_ |
+| _State Rank Box Plot_ |
 |_Above: A box plot, showing the differences in means, variances, maximums and minimums in the amount of gun deaths per capita in states with differing gun laws. Colors from cool (blue) to warm (red) indicate the Gifford's law center state ranking, with blue being the highest to red being the lowest._|
 
 ## Discussion
