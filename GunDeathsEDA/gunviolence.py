@@ -301,7 +301,7 @@ class GunViolenceTool(object):
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
         out_plt = self.set_plot_titles(plt, df)
-        out_plt.savefig('../figs/bgc_reg.png', format="png")
+        out_plt.savefig('../figs/bgc_reg.png', format="png", dpi=600)
         out_plt.show()
 
 
@@ -324,7 +324,7 @@ class GunViolenceTool(object):
         color_rank_set = self.make_color_rank_set(df)
         ax = self.create_legend(ax, color_rank_set)
         out_plt = self.set_plot_titles(plt, df)
-        out_plt.savefig('../figs/strank_reg.png', format="png")
+        out_plt.savefig('../figs/strank_reg.png', format="png", dpi=600)
         out_plt.show()
 
 
